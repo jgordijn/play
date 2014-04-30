@@ -19,15 +19,15 @@ object Example extends Controller {
   }
 
   def temperature(city: String) = Action.async {
-    val url = s"http://api.openweathermap.org/data/2.5/weather?q=${city},NL&mode=json&units=metric"
-    for {
-      response <- WS.url(url).get()
-      temp = (response.json \ "main" \ "temp").as[Double]
-      rain = (response.json \ "rain" \ "3h").asOpt[Double]
-    } yield Ok(<html><body>
-          <h1>Het is nu {temp}&deg; C in {city}</h1>
-          Er komt {rain.map(mm => s"${mm}mm").getOrElse("geen")} regen
-          </body></html>).as(HTML)
+    val url = s"http://api.openweathermap.org/data/2.5/weather?q=$city,NL&mode=json&units=metric"
+    WS.url(url).get().map { response =>
+      val temp = (response.json \ "main" \ "temp").as[Double]
+      val rain = (response.json \ "rain" \ "3h").asOpt[Double]
+      Ok(<html><body>
+        <h1>Het is nu {temp}&deg; C in {city}</h1>
+        Er komt {rain.fold("geen")(mm => s"${mm}mm")} regen
+      </body></html>).as(HTML)
+    }
   }
 
 
