@@ -1,0 +1,11 @@
+@(city: String, temp: Double, rain: Option[Double])
+
+<html>
+    <head>
+        <title>Het weer in @city</title>
+    </head>
+    <body>
+    <h1>Het is nu @temp&deg; C in @city</h1>
+    Er komt @rain.fold("geen")(mm => s"${mm}mm") regen
+    </body>
+</html>

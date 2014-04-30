@@ -30,6 +30,15 @@ object Example extends Controller {
     }
   }
 
+  def temperatureTmpl(city: String) = Action.async {
+    val url = s"http://api.openweathermap.org/data/2.5/weather?q=$city,NL&mode=json&units=metric"
+    WS.url(url).get().map { response =>
+      val temp = (response.json \ "main" \ "temp").as[Double]
+      val rain = (response.json \ "rain" \ "3h").asOpt[Double]
+      Ok(views.html.weer(city, temp, rain))
+    }
+  }
+
 
 
 
