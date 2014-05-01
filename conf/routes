@@ -6,7 +6,7 @@ GET        /                                 controllers.MainController.index()
 GET        /message                          controllers.MessageController.getMessage()
 GET        /assets/javascripts/routes        controllers.MessageController.javascriptRoutes()
 GET        /simpel                           controllers.Example.simpel
-PUT        /reservation                      controllers.Example.reservation(id: Long)
+PUT        /reservation/:id                  controllers.Example.reservation(id: Long)
 GET        /temp/:city                       controllers.Example.temperature(city)
 GET        /temptmpl/:city                   controllers.Example.temperatureTmpl(city)
 
