@@ -6,6 +6,11 @@
     </head>
     <body>
     <h1>Het is nu @temp&deg; C in @city</h1>
-    Er komt @rain.fold("geen")(mm => s"${mm}mm") regen
+    @if(rain.isDefined) {
+        Er komt @(rain.get)mm regen
+    } else {
+        Het blijft droog!
+    }
+        @weer_image(rain)
     </body>
 </html>
